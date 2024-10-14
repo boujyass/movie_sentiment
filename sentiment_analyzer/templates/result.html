@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Sentiment Analysis Result</h1>
+{% if movie_info %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">{{ movie_info.Title }} ({{ movie_info.Year }})</h5>
+        <p class="card-text">Director: {{ movie_info.Director }}</p>
+        <p class="card-text">IMDB Rating: {{ movie_info.imdbRating }}</p>
+    </div>
+</div>
+{% endif %}
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Overall Sentiment</h5>
+        <p class="card-text">{{ sentiment }} (Score: {{ score|floatformat:2 }})</p>
+        <h5 class="card-title">Review</h5>
+        <p class="card-text">{{ review }}</p>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Aspect-Based Analysis</h5>
+        {% for aspect, data in aspects.items %}
+        <p class="card-text"><strong>{{ aspect|title }}:</strong> {{ data.sentiment }} (Score: {{ data.score|floatformat:2 }})</p>
+        {% endfor %}
+    </div>
+</div>
+<a href="{% url 'analyze_review' %}" class="btn btn-primary">Analyze another review</a>
+{% endblock %}

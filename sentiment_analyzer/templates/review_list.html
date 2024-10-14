@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">All Reviews</h1>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <canvas id="sentimentChart"></canvas>
+    </div>
+</div>
+
+<div class="list-group">
+    {% for review in reviews %}
+    <div class="list-group-item">
+        <h5 class="mb-1">{{ review.text|truncatechars:100 }}</h5>
+        <p class="mb-1">Sentiment: {{ review.sentiment }} (Score: {{ review.score|floatformat:2 }})</p>
+        <small>Created at: {{ review.created_at }}</small>
+    </div>
+    {% endfor %}
+</div>
+<a href="{% url 'analyze_review' %}" class="btn btn-primary mt-3">Analyze a new review</a>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('sentimentChart').getContext('2d');
+    var sentimentData = { sentiment_data ,safe };
+    var chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: Object.keys(sentimentData),
+            datasets: [{
+                data: Object.values(sentimentData),
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Sentiment Distribution'
+            }
+        }
+    });
+</script>
+{% endblock %}

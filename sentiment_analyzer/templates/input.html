@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        <input type="text" class="form-control" name="movie_title" placeholder="Enter movie title">
+    </div>
+    <div class="mb-3">
+        <textarea class="form-control" name="review_text" rows="4" placeholder="Enter your movie review here"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Analyze Sentiment</button>
+</form>
+{% endblock %}
